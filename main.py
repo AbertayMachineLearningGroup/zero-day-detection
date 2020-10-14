@@ -27,10 +27,11 @@ def evaluate(model, valid_X, attack_path, output_file):
             file.write('{}, {}, {} \n'.format(attack_path, res, 1-res))
     else:
         threshold = [0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95]
-#        res = model.evaluate(valid_X, valid_X)        
-#        with open(output_file, "a") as file:
-#            file.write('{}, {}, {}, {} \n'.format(attack_path, res[1], 1-res[1], np.shape(valid_X)[0]))
-#                
+        res = model.evaluate(valid_X, valid_X)        
+        with open(output_file, "a") as file:
+            file.write('Result using threshold = 0.05 \n')
+            file.write('{}, {}, {}, {} \n'.format(attack_path, res[1], 1-res[1], np.shape(valid_X)[0]))
+                
         for th in threshold:
             anomaly_count = (np.mean(np.square(valid_X - model.predict(valid_X)), axis=1) < th).sum()
             res_ = anomaly_count / np.shape(valid_X)[0]
