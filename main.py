@@ -90,6 +90,8 @@ if __name__ == '__main__':
     parser.add_argument('--model', default = 'autoencoder')
     parser.add_argument('--nu',type=float, default=0.01)
     parser.add_argument('--kern', default='rbf')
+    parser.add_argument('--loss', default='mse')
+    
     
     args = parser.parse_args()
     output_file = args.output;
@@ -134,7 +136,11 @@ if __name__ == '__main__':
         wrapper = autoencoder.autoencoder(len(normal.columns), 
                                      archi = args.archi, 
                                      reg = args.regu,
-                                     dropout = args.dropout)
+                                     l1_value = args.l1_value, 
+                                     l2_value = args.l2_value,
+                                     dropout = args.dropout,
+                                     loss = args.loss)
+        
         with open(output_file ,'a') as file:
             wrapper.model.summary(print_fn=lambda x: file.write(x + '\n'))    
         

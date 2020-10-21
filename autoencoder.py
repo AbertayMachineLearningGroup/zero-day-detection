@@ -12,7 +12,7 @@ from keras.regularizers import l2, l1, l1_l2
 import keras.backend as K
 
 class autoencoder:
-    def __init__(self, num_features, verbose=True, mse_threshold = 0.05, archi="U15,D,U9,D,U6,D,U9,D,U15", reg = 'l2', l1_value = 0.1, l2_value = 0.001, dropout = 0.05):
+    def __init__(self, num_features, verbose=True, mse_threshold = 0.5, archi="U15,D,U9,D,U6,D,U9,D,U15", reg = 'l2', l1_value = 0.1, l2_value = 0.001, dropout = 0.05, loss = 'mse'):
         self.model = Sequential()
         self.mse_threshold = mse_threshold
         
@@ -40,7 +40,11 @@ class autoencoder:
         layer6 = Dense(units = num_features)(previous)
             
         self.model = Model(input_, layer6)
-        self.model.compile(loss='mean_squared_error', optimizer = 'adadelta', metrics=[self.accuracy])
+        if loss == 'mae':
+            self.model.compile(loss=self.loss, optimizer = 'rmsprop', metrics=[self.accuracy])
+        else:
+            self.model.compile(loss='mean_squared_error', optimizer = 'adadelta', metrics=[self.accuracy])        
+        
         
         if verbose:
             self.model.summary()   

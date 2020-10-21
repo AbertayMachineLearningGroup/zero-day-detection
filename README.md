@@ -42,6 +42,7 @@ To cite the paper please use the following format;
 | --correlation_value | Correlation value to drop features | 0.9 | |
 | --nu | One-Class SVM nu value | 0.01 | | 
 | --kern | One-Class SVM kernel | rbf | | 
+| --loss | Loss function | mse | NSL-KDD: mae | 
 
 ## How to Run the repository:
 
