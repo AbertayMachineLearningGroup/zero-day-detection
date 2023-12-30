@@ -42,7 +42,10 @@ def evaluate(model, valid_X, attack_path, output_file):
 label_encoder_1 = preprocessing.LabelEncoder()
 label_encoder_2 = preprocessing.LabelEncoder()
 label_encoder_3 = preprocessing.LabelEncoder()
-one_hot_encoder = preprocessing.OneHotEncoder(categorical_features = [1,2,3])
+# one_hot_encoder = preprocessing.OneHotEncoder(categorical_features = [1,2,3])
+
+
+
 
 def read_kdd_dataset(path):
     global label_encoder_1, label_encoder_2, label_encoder_3, one_hot_encoder
@@ -59,7 +62,11 @@ def read_kdd_dataset(path):
         dataset[:, 1] = label_encoder_1.fit_transform(dataset[:, 1])
         dataset[:, 2] = label_encoder_2.fit_transform(dataset[:, 2])        
         dataset[:, 3] = label_encoder_3.fit_transform(dataset[:, 3])
-        dataset_features = one_hot_encoder.fit_transform(dataset[:, :-2]).toarray() 
+        # dataset_features = one_hot_encoder.fit_transform(dataset[:, :-2]).toarray() 
+        categorical_cols = [1, 2, 3]  # Specify the categorical columns here
+        # Ensure categorical columns are properly encoded using OneHotEncoder
+        one_hot_encoder = preprocessing.OneHotEncoder(categories='auto', sparse=False, handle_unknown='ignore')
+        one_hot_encoded_cols = one_hot_encoder.fit_transform(dataset[:, categorical_cols])
     else:
         dataset[:, 1] = label_encoder_1.transform(dataset[:, 1])
         dataset[:, 2] = label_encoder_2.transform(dataset[:, 2])        

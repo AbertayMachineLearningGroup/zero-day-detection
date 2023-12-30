@@ -20,7 +20,7 @@ def dataframe_drop_correlated_columns(df, threshold=0.95, verbose=False):
     corr_matrix = df.corr().abs()
     
     # Select upper triangle of correlation matrix
-    upper = corr_matrix.where(np.triu(np.ones(corr_matrix.shape), k=1).astype(np.bool))
+    upper = corr_matrix.where(np.triu(np.ones(corr_matrix.shape), k=1).astype(bool)) # Depracated np.bool, change to bool
 
     # Find index of feature columns with correlation greater than 0.95
     to_drop = [column for column in upper.columns if any(upper[column] > threshold)]

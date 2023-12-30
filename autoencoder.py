@@ -51,8 +51,8 @@ class autoencoder:
             
     
     def accuracy(self, y_true, y_pred):
-        mse = K.mean(K.square((y_true - y_pred)), axis = 1)
-        temp = K.ones(K.shape(mse))
+        mse = K.mean(K.square((y_true - y_pred)), axis=1)
+        temp = K.ones_like(mse) # Resolve out-of-scope error
         return K.mean(K.equal(temp, K.cast(mse < self.mse_threshold, temp.dtype)))
     
     def loss(self, y_true,y_pred):
